@@ -1,14 +1,32 @@
-<?php 
-    $artworks = require './oeuvres.php';
-    $key = 'id';
-    $selectedId = $_GET[$key];
-    $redirectToHome = fn() => header('Location: ' . '/');
+<?php
+    include('./database.php');
+    $selectedId = intval($_GET[$key]);
 
-    if (!$selectedId) $redirectToHome();
+    /**
+     * Obsolète
+     * TODO: A changer
+     */
+    // $artworks = require './oeuvres.php';
+    // $key = 'id';
+    // $redirectToHome = fn() => header('Location: ' . '/');
 
-    $artwork = reset(array_filter($artworks, fn ($artwork) => $artwork[$key] === intval($selectedId)));
+    // if (!$selectedId) $redirectToHome();
 
-    if (!$artwork) $redirectToHome();
+    // $artwork = reset(array_filter($artworks, fn ($artwork) => $artwork[$key] === intval($selectedId)));
+
+    // if (!$artwork) $redirectToHome();
+    // END
+
+    /**
+     * Fetch database
+     */
+    $query = $mysqlClient->prepare('SELECT * FROM oeuvres WHERE id = :id');
+    $query->execute([
+        'id' => $selectedId
+    ]);
+    $artwork = $query->fetch();
+
+    var_dump($artwork);
 ?>
 <!doctype html>
 <html lang="fr">
@@ -25,7 +43,7 @@
     <main>
         <article id="detail-oeuvre">
             <div id="img-oeuvre">
-                <img src="<?= $artwork['image_src'] ?>" alt="<?= $artwork['image_alt'] ?>">
+                <img src="<?= $artwork['image'] ?>" alt="<?= $artwork['title'] ?>">
             </div>
             <div id="contenu-oeuvre">
                 <h1><?= $artwork['title'] ?></h1>

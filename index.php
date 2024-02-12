@@ -1,5 +1,16 @@
 <?php
     $artworks = require './oeuvres.php';
+    include('./database.php');
+
+    $query = $mysqlClient->prepare('SELECT * FROM oeuvres');
+    $query->execute();
+    $data = $query->fetchAll();
+
+    function preint($val) {
+        echo '<pre>';
+            var_dump($val);
+        echo '</pre>';
+    }
 ?>
 <!doctype html>
 <html lang="fr">
@@ -15,10 +26,10 @@
     <?php include ('./header.php'); ?>
     <main>
         <div id="liste-oeuvres">
-            <?php foreach($artworks as $artwork): ?>
+            <?php foreach($data as $artwork): ?>
                 <article class="oeuvre">
                     <a href="oeuvre.php?id=<?= $artwork['id'] ?>">
-                        <img src="<?= $artwork['image_src'] ?>" alt="<?= $artwork['image_alt'] ?>">
+                        <img src="<?= $artwork['image'] ?>" alt="<?= $artwork['title'] ?>">
                         <h2><?= $artwork['title'] ?></h2>
                         <p class="description"><?= $artwork['artist'] ?></p>
                     </a>
