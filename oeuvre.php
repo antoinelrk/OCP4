@@ -3,21 +3,6 @@
     $selectedId = intval($_GET[$key]);
 
     /**
-     * Obsolète
-     * TODO: A changer
-     */
-    // $artworks = require './oeuvres.php';
-    // $key = 'id';
-    // $redirectToHome = fn() => header('Location: ' . '/');
-
-    // if (!$selectedId) $redirectToHome();
-
-    // $artwork = reset(array_filter($artworks, fn ($artwork) => $artwork[$key] === intval($selectedId)));
-
-    // if (!$artwork) $redirectToHome();
-    // END
-
-    /**
      * Fetch database
      */
     $query = $mysqlClient->prepare('SELECT * FROM oeuvres WHERE id = :id');
