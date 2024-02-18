@@ -1,1 +1,6 @@
 .env
+/vendor/
+docker-compose.yml
+docker/*
+composer.json
+composer.lock
