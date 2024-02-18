@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1deb5ubuntu1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost:3306
--- Généré le : dim. 18 fév. 2024 à 08:29
--- Version du serveur : 8.0.36-0ubuntu0.22.04.1
--- Version de PHP : 8.3.3-1+ubuntu22.04.1+deb.sury.org+1
+-- Hôte : database
+-- Généré le : dim. 18 fév. 2024 à 10:05
+-- Version du serveur : 10.4.4-MariaDB-1:10.4.4+maria~bionic
+-- Version de PHP : 8.2.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,11 +28,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `oeuvres` (
-  `id` bigint UNSIGNED NOT NULL,
-  `title` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `artist` varchar(64) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `description` text CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `image` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(128) COLLATE latin1_general_ci NOT NULL,
+  `artist` varchar(64) COLLATE latin1_general_ci NOT NULL,
+  `description` longtext COLLATE latin1_general_ci NOT NULL,
+  `image` varchar(255) COLLATE latin1_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
@@ -64,7 +64,8 @@ INSERT INTO `oeuvres` (`id`, `title`, `artist`, `description`, `image`) VALUES
 -- Index pour la table `oeuvres`
 --
 ALTER TABLE `oeuvres`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `title` (`title`,`artist`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -74,7 +75,7 @@ ALTER TABLE `oeuvres`
 -- AUTO_INCREMENT pour la table `oeuvres`
 --
 ALTER TABLE `oeuvres`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
