@@ -1,5 +1,9 @@
 <?php
-    $artworks = require './oeuvres.php';
+include './includes/bootstrap.php';
+
+$query = $dbConnection->prepare('SELECT * FROM oeuvres');
+$query->execute();
+$data = $query->fetchAll();
 ?>
 <!doctype html>
 <html lang="fr">
@@ -12,20 +16,20 @@
     <title>The ArtBox</title>
 </head>
 <body>
-    <?php include ('./header.php'); ?>
-    <main>
-        <div id="liste-oeuvres">
-            <?php foreach($artworks as $artwork): ?>
-                <article class="oeuvre">
-                    <a href="oeuvre.php?id=<?= $artwork['id'] ?>">
-                        <img src="<?= $artwork['image_src'] ?>" alt="<?= $artwork['image_alt'] ?>">
-                        <h2><?= $artwork['title'] ?></h2>
-                        <p class="description"><?= $artwork['artist'] ?></p>
-                    </a>
-                </article>
-            <?php endforeach ?>
-        </div>
-    </main>
-    <?php include('./footer.php'); ?>
+<?php include ('./includes/header.php'); ?>
+<main>
+    <div id="liste-oeuvres">
+        <?php foreach($data as $artwork): ?>
+            <article class="oeuvre">
+                <a href="oeuvre.php?id=<?= $artwork['id'] ?>">
+                    <img src="<?= $artwork['image'] ?>" alt="<?= $artwork['title'] ?>">
+                    <h2><?= $artwork['title'] ?></h2>
+                    <p class="description"><?= $artwork['artist'] ?></p>
+                </a>
+            </article>
+        <?php endforeach ?>
+    </div>
+</main>
+<?php include('./includes/footer.php'); ?>
 </body>
 </html>
