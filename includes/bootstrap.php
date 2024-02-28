@@ -1,5 +1,6 @@
 <?php
-require './vendor/autoload.php';
+// Only for dev env
+// require './vendor/autoload.php';
 
 include './core/Database.php';
 require './core/Helper.php';
