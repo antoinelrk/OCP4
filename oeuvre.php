@@ -1,14 +1,17 @@
-<?php 
-    $artworks = require './oeuvres.php';
+<?php
+    include './includes/bootstrap.php';
+
     $key = 'id';
-    $selectedId = $_GET[$key];
-    $redirectToHome = fn() => header('Location: ' . '/');
+    $selectedId = intval($_GET[$key]);
 
-    if (!$selectedId) $redirectToHome();
-
-    $artwork = reset(array_filter($artworks, fn ($artwork) => $artwork[$key] === intval($selectedId)));
-
-    if (!$artwork) $redirectToHome();
+    /**
+     * Fetch database
+     */
+    $query = $dbConnection->prepare('SELECT * FROM oeuvres WHERE id = :id');
+    $query->execute([
+        'id' => $selectedId
+    ]);
+    $artwork = $query->fetch();
 ?>
 <!doctype html>
 <html lang="fr">
@@ -21,11 +24,11 @@
     <title>The ArtBox</title>
 </head>
 <body>
-    <?php include ('./header.php'); ?>
+    <?php include './includes/header.php'; ?>
     <main>
         <article id="detail-oeuvre">
             <div id="img-oeuvre">
-                <img src="<?= $artwork['image_src'] ?>" alt="<?= $artwork['image_alt'] ?>">
+                <img src="<?= $artwork['image'] ?>" alt="<?= $artwork['title'] ?>">
             </div>
             <div id="contenu-oeuvre">
                 <h1><?= $artwork['title'] ?></h1>
@@ -34,6 +37,7 @@
             </div>
         </article>
     </main>
-    <?php include ('./footer.php') ?>
+    <?php include ('./includes/footer.php') ?>
 </body>
 </html>
+
